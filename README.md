@@ -31,12 +31,9 @@ for images < 50 MB
 
 ## in framework
 
-* [https://github.com/pbogden/demo](https://github.com/pbogden/demo) -- my repo
-  * sets up node and yarn
 * [Framework](https://observablehq.com/framework/)
 * [getting started](https://observablehq.com/framework/getting-started)
 
 ```
 yarn create @observablehq
 ```
-
