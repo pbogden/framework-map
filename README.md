@@ -18,18 +18,15 @@ data-processing pipeline (see the Makefile)
 * `gdalinfo -json webmap.tif` # provides corner coordinates in decimal degrees
 * `gdal_translate webmap.tif webmap.png` # convert GeoTIFF to PNG (a web standard format)
 
-## vector data on a map
+## some demos
+
+for data files < 50 MB
 
 * GeoJSON -- https://ds5010.github.io/broadband-4/
-
-## raster data on a map
-
-for images < 50 MB
-
 * https://observablehq.com/@pbogden/vermont
 * raster tiles -- https://pbogden.github.io/colorado/
 
-## in framework
+## Framework
 
 * [Framework](https://observablehq.com/framework/)
 * [getting started](https://observablehq.com/framework/getting-started)
@@ -37,3 +34,8 @@ for images < 50 MB
 ```
 yarn create @observablehq
 ```
+
+* [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
+* [mcclare.blog](https://mclare.blog/posts/building-oss-map-apps-with-observable-framework/)
+* [observable-framework-maps](https://github.com/bdon/observable-framework-maps) -- github
+  * [demo](https://bdon.github.io/observable-framework-maps/)
