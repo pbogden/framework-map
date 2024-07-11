@@ -28,15 +28,6 @@ or
 
 ---
 
-## Observable notebooks
-
-* [Intro to Observable](https://observablehq.com/collection/@observablehq/intro-to-observable)
-  * https://observablehq.com/@observablehq/learning-observable-introduction
-* [Hands-on tutorials](https://observablehq.com/@observablehq/hands-on-tutorials-overview)
-  * https://observablehq.com/@observablehq/hands-on-tutorials-overview
-
----
-
 ## Links
 
 * Poll: https://PollEv.com/pbogden
@@ -45,3 +36,12 @@ or
 * Framework: https://observablehq.com/framework/
 * Repo: https://github.com/pbogden/framework-map
 * git stuff (& conda): https://github.com/ds5110/git-intro
+
+---
+
+## Intro to Observable
+
+* [Intro to Observable](https://observablehq.com/collection/@observablehq/intro-to-observable)
+  * https://observablehq.com/@observablehq/learning-observable-introduction
+* [Hands-on tutorials](https://observablehq.com/@observablehq/hands-on-tutorials-overview)
+  * https://observablehq.com/@observablehq/hands-on-tutorials-overview
