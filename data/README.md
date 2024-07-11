@@ -39,6 +39,14 @@ or
 
 ---
 
+## Plan
+
+* Intro to observable
+* Satellite data processing
+* Put it on a (wicked cool) map
+
+---
+
 ## Intro to Observable
 
 * [Intro to Observable](https://observablehq.com/collection/@observablehq/intro-to-observable)
