@@ -35,7 +35,7 @@ or
 * Plot: https://observablehq.com/plot/
 * Framework: https://observablehq.com/framework/
 * Repo: https://github.com/pbogden/framework-map
-* git stuff (& conda): https://github.com/ds5110/git-intro
+* git stuff: https://github.com/ds5110/git-intro
 
 ---
 
