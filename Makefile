@@ -1,6 +1,6 @@
 png:
-	gdalinfo data/vt.tif  # transverse mercator
-#	gdalwarp -t_srs EPSG:3857 -r near vt.tif webmap.tif
+#	gdalinfo data/vt.tif  # transverse mercator
+	gdalwarp -t_srs EPSG:3857 -r near data/vt.tif data/webmap.tif
 #	gdalinfo -json webmap.tif # `wgs84Extent` has corner coordinates in decimal degrees
 #	gdal_translate webmap.tif webmap.png
 
