@@ -1,4 +1,4 @@
-# web maps for smart agriculture
+# maps for smart agriculture
 
 Philip Bogden
 
