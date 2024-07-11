@@ -31,11 +31,11 @@ or
 ## Links
 
 * Poll: https://PollEv.com/pbogden
+* git stuff: https://github.com/ds5110/git-intro
 * Observable: https://observablehq.com 
 * Plot: https://observablehq.com/plot/
 * Framework: https://observablehq.com/framework/
 * Repo: https://github.com/pbogden/framework-map
-* git stuff: https://github.com/ds5110/git-intro
 
 ---
 
