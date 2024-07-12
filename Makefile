@@ -4,7 +4,8 @@ png:
 	gdalinfo -json data/webmap.tif # `wgs84Extent` has corner coordinates in decimal degrees
 	gdal_translate data/webmap.tif data/webmap.png
 
-#tiles:
+tiles:
 #	-rm -rf webmap
 #	gdal2tiles.py webmap.tif # this produces TMS tiles -- MapLibre doesn't support them
 #	gdal2tiles.py --xyz data/webmap.tif # this crashes -- in principle MapLibre should support the output
+	gdal_translate data/webmap.tif data/webmap.mbtiles -of MBTILES
