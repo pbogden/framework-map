@@ -38,7 +38,7 @@ See: [getting started](https://observablehq.com/framework/getting-started).
 
 The file `hello-framework/docs/map.md` has a Framework version of the observable notebook.
 
-To deploy on github pages
+To deploy on github pages from `./docs`
 ```
 mkdir docs
 touch docs/.nojekyll
