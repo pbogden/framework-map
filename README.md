@@ -60,3 +60,14 @@ See also...
 * [mcclare.blog](https://mclare.blog/posts/building-oss-map-apps-with-observable-framework/)
 * [observable-framework-maps](https://github.com/bdon/observable-framework-maps) -- github
   * [demo](https://bdon.github.io/observable-framework-maps/)
+
+## Map tiles
+
+The solution above creates a single image. This approach creates raster map tiles.
+
+```
+gdal2tiles.py data/webmap.tif docs/webmap
+```
+
+`hello-framework/docs/tiles.md` has a Framework version of the observable notebook: 
+[Vermont tiles](https://observablehq.com/@pbogden/vermont-tiles).

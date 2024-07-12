@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Vermont | Hello Framework</title>
+<title>Vermont tiles | Hello Framework</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
@@ -31,7 +31,7 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 return {opacity};
 }});
 
-define({id: "727a50d5", inputs: ["display","maplibregl"], outputs: ["div","map","bounds"], body: (display,maplibregl) => {
+define({id: "62fca0f2", inputs: ["display","maplibregl"], outputs: ["div","map","bounds"], body: (display,maplibregl) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -60,24 +60,17 @@ const map = new maplibregl.Map({
 
   map.on('load', () => {
     map.addSource('vt', {
-        "type": "image",
-        "url": "https://pbogden.github.io/webmap.png", 
-        "coordinates": [
-            [-72.8699937, 43.1636548], // upper left
-            [-72.6942517, 43.1636548], // upper right
-            [-72.6942517, 43.0343442], // bottom right
-            [-72.8699937, 43.0343442], // bottom left
-        ]
+        type: "raster",
+        scheme: "tms",
+        tiles: ["https://pbogden.github.io/framework-map/webmap/{z}/{x}/{y}.png"],
     });
     map.addLayer({
-                    'id': 'vt',
-                    'type': 'raster',
-                    'source': 'vt',
-                    'minzoom': 0,
-                    'maxzoom': 22,
-                    'paint': {'raster-opacity': .5},
-                })
-  })
+        id: 'vt',
+        type: 'raster',
+        source: 'vt',
+        paint: {'raster-opacity': .5},
+    })
+  });
 return {div,map,bounds};
 }});
 
@@ -93,10 +86,10 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 <nav id="observablehq-sidebar">
   <ol>
     <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
-    <li class="observablehq-link observablehq-link-active"><a href="./">Hello Framework</a></li>
+    <li class="observablehq-link"><a href="./">Hello Framework</a></li>
   </ol>
   <ol>
-    <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./tiles">Vermont tiles</a></li>
   </ol>
 </nav>
 <script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -106,15 +99,16 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<h1 id="vermont" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont">Vermont</a></h1>
+<h1 id="vermont-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont-tiles">Vermont tiles</a></h1>
+<p>This version uses map tiles instead of a single PNG.</p>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
-<div class="observablehq observablehq--block"><!--:727a50d5:--></div>
+<div class="observablehq observablehq--block"><!--:62fca0f2:--></div>
 <div class="observablehq observablehq--block"><!--:4650f014:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="next" href="./tiles"><span>Vermont tiles</span></a></nav>
+<nav><a rel="prev" href="./"><span>Hello Framework</span></a></nav>
 <div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-07-12T15:38:28">Jul 12, 2024</a>.</div>
 </footer>
 </div>
