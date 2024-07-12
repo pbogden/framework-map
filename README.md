@@ -16,15 +16,15 @@ gdalinfo data/vt.tif
 ```
 Convert to Web Mercator
 ```
-gdalwarp -t_srs EPSG:3857 -r near vt.tif webmap.tif
+gdalwarp -t_srs EPSG:3857 -r near data/vt.tif data/webmap.tif
 ```
 Get coorner coordinates in decimal degrees from "wgs84Extent" in the JSON output
 ```
-gdalinfo -json webmap.tif
+gdalinfo -json data/webmap.tif
 ```
 Convert to PNG
 ```
-gdal_translate webmap.tif webmap.png
+gdal_translate data/webmap.tif data/webmap.png
 ```
 
 ## Observable notebook
@@ -36,9 +36,16 @@ gdal_translate webmap.tif webmap.png
 [Framework](https://observablehq.com/framework/) has great documentation.
 See: [getting started](https://observablehq.com/framework/getting-started).
 
-The file `hello-framework/docs/map.md` has a Framework version of the observable notebook.
+Copy the PNG into the data directory of the Framework project. For example:
+```
+mkdir hello-framework/docs/data
+cp data/webmap.png hello-framework/docs/data
+```
 
-To deploy on github pages from `./docs`
+`hello-framework/docs/map.md` has a Framework version of the observable notebook: 
+[Vermont](https://observablehq.com/@pbogden/vermont).
+
+Deploy on github pages, in this case served from `./docs`
 ```
 mkdir docs
 touch docs/.nojekyll
