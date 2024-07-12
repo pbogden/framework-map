@@ -9,10 +9,22 @@ to PNG using [GDAL](https://gdal.org/index.html).
 (Note: if you installed geopandas from conda-forge, then you have gdal.)
 The final projection must be [Web Mercator](https://en.wikipedia.org/wiki/Web_Mercator_projection).
 
-* `gdalinfo data/vt.tif` -- Our demo file is [transverse mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection)
-* `gdalwarp -t_srs EPSG:3857 -r near vt.tif webmap.tif` -- convert to Web Mercator
-* `gdalinfo -json webmap.tif` -- "wgs84Extent" in the JSON output has corner coordinates in decimal degrees
-* `gdal_translate webmap.tif webmap.png` -- convert to PNG
+*  Our demo file is [transverse Mercator](https://en.wikipedia.org/wiki/Transverse_Mercator_projection)
+  ```
+  gdalinfo data/vt.tif
+  ```
+* Convert to Web Mercator
+  ```
+  gdalwarp -t_srs EPSG:3857 -r near vt.tif webmap.tif
+  ```
+* Get coorner coordinates in decimal degrees from "wgs84Extent" in the JSON output
+  ```
+  gdalinfo -json webmap.tif
+  ```
+* Convert to PNG
+  ```
+  gdal_translate webmap.tif webmap.png
+  ```
 
 ## Observable notebook
 
