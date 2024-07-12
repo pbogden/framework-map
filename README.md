@@ -36,12 +36,16 @@ gdal_translate webmap.tif webmap.png
 [Framework](https://observablehq.com/framework/) has great documentation.
 See: [getting started](https://observablehq.com/framework/getting-started).
 
-Create a framework project
-```
-yarn create @observablehq
-```
-Copy the markdown file into the docs/data directory framework project
+The file `hello-framework/docs/map.md` has a Framework version of the observable notebook.
 
+To deploy on github pages
+```
+mkdir docs
+touch docs/.nojekyll
+cd hello-framework
+yarn build
+cp -r dist/* ../docs
+```
 
 See also...
 * [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
