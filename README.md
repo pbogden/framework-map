@@ -27,6 +27,8 @@ Create a framework project
 ```
 yarn create @observablehq
 ```
+Copy the markdown file into the docs/data directory framework project
+
 
 See also...
 * [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
