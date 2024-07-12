@@ -46,6 +46,7 @@ cd hello-framework
 yarn build
 cp -r dist/* ../docs
 ```
+The site is here: https://pbogden.github.io/framework-map/
 
 See also...
 * [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
