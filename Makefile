@@ -5,7 +5,7 @@ png:
 	gdal_translate data/webmap.tif data/webmap.png
 
 tiles:
-#	-rm -rf webmap
-#	gdal2tiles.py webmap.tif # this produces TMS tiles -- MapLibre doesn't support them
-#	gdal2tiles.py --xyz data/webmap.tif # this crashes -- in principle MapLibre should support the output
-	gdal_translate data/webmap.tif data/webmap.mbtiles -of MBTILES
+	-rm -rf docs/webmap
+	gdal2tiles.py data/webmap.tif docs # this produces TMS tiles -- set scheme to "tms" for MapLibre
+#	gdal2tile#.py --xyz data/webmap.tif # this crashes -- in principle MapLibre should support the output
+#	gdal_translate data/webmap.tif data/webmap.mbtiles -of MBTILES
