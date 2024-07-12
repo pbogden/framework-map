@@ -18,7 +18,7 @@ Convert to Web Mercator
 ```
 gdalwarp -t_srs EPSG:3857 -r near data/vt.tif data/webmap.tif
 ```
-Get coorner coordinates in decimal degrees from "wgs84Extent" in the JSON output
+Get corner coordinates in decimal degrees from "wgs84Extent" in the JSON output
 ```
 gdalinfo -json data/webmap.tif
 ```
