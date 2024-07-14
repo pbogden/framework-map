@@ -66,7 +66,9 @@ See also...
 
 ## Map tiles
 
-The solution above creates a single image. This approach creates raster map tiles.
+The solution above creates a single image. This approach creates raster map tiles,
+which are also available on the github-pages demo.
+Create the tiles with:
 
 ```
 gdal2tiles.py data/webmap.tif docs/webmap
