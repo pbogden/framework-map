@@ -73,5 +73,4 @@ gdal2tiles.py data/webmap.tif docs/webmap
 ```
 
 `hello-framework/docs/tiles.md` has a Framework version of the observable notebook: 
-[Vermont tiles](https://observablehq.com/@pbogden/vermont-tiles), which is also available 
-here: https://pbogden.github.io/framework-map/
+[Vermont tiles](https://observablehq.com/@pbogden/vermont-tiles).
