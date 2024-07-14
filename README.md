@@ -45,7 +45,7 @@ Copy the PNG into the data directory of the Framework project. For example:
 cp data/webmap.png hello-framework/docs/data
 ```
 
-`hello-framework/docs/map.md` has a Framework version of the observable notebook: 
+`hello-framework/docs/map.md` has a Framework version of the Observable notebook: 
 [Vermont](https://observablehq.com/@pbogden/vermont).
 
 Deploy on github pages, in this case served from `./docs`
