@@ -35,10 +35,13 @@ gdal_translate data/webmap.tif data/webmap.png
 
 [Framework](https://observablehq.com/framework/) has great documentation.
 See: [getting started](https://observablehq.com/framework/getting-started).
+The `./hello-framework` directory is a barebones project that created with
+```
+yarn create @observablehq
+```
 
 Copy the PNG into the data directory of the Framework project. For example:
 ```
-mkdir hello-framework/docs/data
 cp data/webmap.png hello-framework/docs/data
 ```
 
