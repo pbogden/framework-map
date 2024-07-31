@@ -25,8 +25,10 @@
   * ID: 460
   * Name: StreamRiver
   * These are the fields in the Shapefile
-  * Index(['permanent_', 'fdate', 'resolution', 'gnis_id', 'gnis_name', 'lengthkm',
-  *        'reachcode', 'flowdir', 'wbarea_per', 'ftype', 'fcode', 'mainpath',
-  *        'innetwork', 'visibility', 'SHAPE_Leng', 'ObjectID', 'geometry'],
+  ```
+  Index(['permanent_', 'fdate', 'resolution', 'gnis_id', 'gnis_name', 'lengthkm',
+         'reachcode', 'flowdir', 'wbarea_per', 'ftype', 'fcode', 'mainpath',
+         'innetwork', 'visibility', 'SHAPE_Leng', 'ObjectID', 'geometry'],
+  ```
 
 ![](nhd.png)
