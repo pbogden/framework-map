@@ -10,6 +10,7 @@ gdf = gpd.read_file("data/Shape/NHDFlowline.shp")
 
 print(gdf.columns)
 print(gdf.head())
+print(gdf.crs)
 
 # Plot the shapefile
 gdf.plot()
