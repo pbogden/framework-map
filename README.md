@@ -35,7 +35,7 @@ gdal_translate data/webmap.tif data/webmap.png
 
 [Framework](https://observablehq.com/framework/) has great documentation.
 See: [getting started](https://observablehq.com/framework/getting-started).
-The `./hello-framework` directory is a barebones project that created with
+The `./hello-framework` directory is a barebones project created with
 ```
 yarn create @observablehq
 ```
@@ -66,7 +66,7 @@ See also...
 
 ## Map tiles
 
-The solution above creates a single image. This approach creates raster map tiles,
+The solution above creates a single image. The approach here creates raster map tiles,
 which are also available on the github-pages demo.
 Create the tiles with:
 
