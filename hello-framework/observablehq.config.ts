@@ -9,7 +9,7 @@ export default {
   pages: [
    {name: "Vermont", path: "/"},
    {name: "Vermont tiles", path: "/tiles"},
-   {name: "Portland", path: "/test"},
+   {name: "Portland", path: "/portland"},
   ]
   //   {
   //     name: "Examples",

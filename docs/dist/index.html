@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>Vermont</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
+<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
+<link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
+<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
+<link rel="modulepreload" href="./_observablehq/client.js">
+<link rel="modulepreload" href="./_observablehq/runtime.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.js">
+<link rel="modulepreload" href="./_npm/maplibre-gl@4.0.2/_esm.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
+<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
+<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
+<script type="module">
+
+import {define} from "./_observablehq/client.js";
+
+define({id: "6465dfc0", outputs: ["maplibregl"], body: async () => {
+const {default: maplibregl} = await import("./_npm/maplibre-gl@4.0.2/_esm.js");
+
+return {maplibregl};
+}});
+
+define({id: "f0c8cbc0", inputs: ["view","Inputs"], outputs: ["opacity"], body: (view,Inputs) => {
+const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFixed(2)}))
+return {opacity};
+}});
+
+define({id: "727a50d5", inputs: ["display","maplibregl"], outputs: ["div","map","bounds"], body: (display,maplibregl) => {
+const div = display(document.createElement("div"));
+div.style = "height: 400px;";
+const map = new maplibregl.Map({
+  container: div,
+  // interactive: false,
+  boxZoom: true, // use shift+drag to create bounding box, "zoom to" follows
+  pitch: 0,
+  bearing: 0,
+  maplibreLogo: true,
+  div,
+  center: [-72.8, 43.1], zoom: 10, // Vermont
+  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  scrollZoom: true
+})
+
+ map.addControl(new maplibregl.NavigationControl());
+
+  // Set map limits
+  map.setMinZoom(7);
+  map.setMaxZoom(15);
+  let bounds = [
+      [-73.8, 42.5], // [west, south]
+      [-71.7, 43.6]  // [east, north]
+  ];
+  map.setMaxBounds(bounds);
+
+  map.on('load', () => {
+    map.addSource('vt', {
+        "type": "image",
+        "url": "https://pbogden.github.io/webmap.png", 
+        "coordinates": [
+            [-72.8699937, 43.1636548], // upper left
+            [-72.6942517, 43.1636548], // upper right
+            [-72.6942517, 43.0343442], // bottom right
+            [-72.8699937, 43.0343442], // bottom left
+        ]
+    });
+    map.addLayer({
+                    'id': 'vt',
+                    'type': 'raster',
+                    'source': 'vt',
+                    'minzoom': 0,
+                    'maxzoom': 22,
+                    'paint': {'raster-opacity': .5},
+                })
+  })
+return {div,map,bounds};
+}});
+
+define({id: "4650f014", inputs: ["map","opacity"], body: (map,opacity) => {
+map.isStyleLoaded() // don't attempt to change things unless layer is actually loaded
+  ? map.setPaintProperty("vt", "raster-opacity", opacity)
+  : null;
+}});
+
+</script>
+<input id="observablehq-sidebar-toggle" type="checkbox" title="Toggle sidebar">
+<label id="observablehq-sidebar-backdrop" for="observablehq-sidebar-toggle"></label>
+<nav id="observablehq-sidebar">
+  <ol>
+    <label id="observablehq-sidebar-close" for="observablehq-sidebar-toggle"></label>
+    <li class="observablehq-link observablehq-link-active"><a href="./">Vermont</a></li>
+  </ol>
+  <ol>
+    <li class="observablehq-link observablehq-link-active"><a href="./">Vermont</a></li>
+    <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
+    <li class="observablehq-link"><a href="./portland">Portland</a></li>
+  </ol>
+</nav>
+<script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
+<aside id="observablehq-toc" data-selector="h1:not(:first-of-type)[id], h2:first-child[id], :not(h1) + h2[id]">
+<nav>
+</nav>
+</aside>
+<div id="observablehq-center">
+<main id="observablehq-main" class="observablehq">
+<h1 id="vermont" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont">Vermont</a></h1>
+<link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
+<div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
+<div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
+<div class="observablehq observablehq--block"><!--:727a50d5:--></div>
+<div class="observablehq observablehq--block"><!--:4650f014:--></div>
+</main>
+<footer id="observablehq-footer">
+<nav><a rel="next" href="./tiles"><span>Vermont tiles</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-08T17:48:17">Dec 8, 2024</a>.</div>
+</footer>
+</div>
