@@ -1,3 +1,7 @@
+deploy:
+	cd hello-framework; yarn build
+	cp -r hello-framework/dist/* docs
+
 # Generate a PNG to add as a layer on a web map
 png:
 #	gdalinfo data/vt.tif  # transverse mercator
