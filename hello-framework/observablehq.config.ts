@@ -6,7 +6,11 @@ export default {
   // The pages and sections in the sidebar. If you don’t specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
   // lets you organize them into sections and have unlisted pages.
-  // pages: [
+  pages: [
+   {name: "Vermont", path: "/"},
+   {name: "Vermont tiles", path: "/tiles"},
+   {name: "Portland", path: "/test"},
+  ]
   //   {
   //     name: "Examples",
   //     pages: [
