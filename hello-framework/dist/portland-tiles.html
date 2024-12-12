@@ -1,24 +1,22 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Vermont tiles | Vermont</title>
+<title>Portland xyz tiles | Vermont</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
-<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.css">
-<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.css">
 <link rel="modulepreload" href="./_observablehq/client.js">
 <link rel="modulepreload" href="./_observablehq/runtime.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.js">
 <link rel="modulepreload" href="./_npm/maplibre-gl@4.0.2/_esm.js">
-<link rel="modulepreload" href="./_observablehq/stdlib/inputs.js">
-<link rel="modulepreload" href="./_npm/htl@0.3.1/_esm.js">
-<link rel="modulepreload" href="./_npm/isoformat@0.2.1/_esm.js">
 <script type="module">
 
 import {define} from "./_observablehq/client.js";
+import {registerFile} from "./_observablehq/stdlib.js";
+
+registerFile("./data/portland_filtered.geojson", {"name":"./data/portland_filtered.geojson","mimeType":"application/geo+json","path":"./_file/data/portland_filtered.2f0526df.geojson","lastModified":1733695304726});
 
 define({id: "6465dfc0", outputs: ["maplibregl"], body: async () => {
 const {default: maplibregl} = await import("./_npm/maplibre-gl@4.0.2/_esm.js");
@@ -26,12 +24,12 @@ const {default: maplibregl} = await import("./_npm/maplibre-gl@4.0.2/_esm.js");
 return {maplibregl};
 }});
 
-define({id: "f0c8cbc0", inputs: ["view","Inputs"], outputs: ["opacity"], body: (view,Inputs) => {
-const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFixed(2)}))
-return {opacity};
+define({id: "421a72ed", inputs: ["FileAttachment"], outputs: ["data"], body: (FileAttachment) => {
+const data = FileAttachment("./data/portland_filtered.geojson").json();
+return {data};
 }});
 
-define({id: "62fca0f2", inputs: ["display","maplibregl"], outputs: ["div","map","bounds"], body: (display,maplibregl) => {
+define({id: "b64b264a", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -42,42 +40,62 @@ const map = new maplibregl.Map({
   bearing: 0,
   maplibreLogo: true,
   div,
-  center: [-72.8, 43.1], zoom: 10, // Vermont
-  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  center: [-70.2568, 43.6591], zoom: 12, // Portland
+//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // works local and remote
+//  style: "https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL", // localhost only
+//  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC", // doesn't work
+       style: {
+            'version': 8,
+            'sources': {
+                'raster-tiles': {
+                    'type': 'raster',
+                    'tiles': [
+                        // NOTE: Layers from Stadia Maps do not require an API key for localhost development or most production
+                        // web deployments. See https://docs.stadiamaps.com/authentication/ for details.
+                        'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg'
+                    ],
+                    'tileSize': 256,
+                    'attribution':
+                        'Map tiles by <a target="_blank" href="https://stamen.com">Stamen Design</a>; Hosting by <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>. Data &copy; <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a> contributors'
+                }
+            },
+            'layers': [
+                {
+                    'id': 'simple-tiles',
+                    'type': 'raster',
+                    'source': 'raster-tiles',
+                    'minzoom': 0,
+                    'maxzoom': 22
+                }
+            ]
+        },
   scrollZoom: true
 })
 
  map.addControl(new maplibregl.NavigationControl());
 
   // Set map limits
-  map.setMinZoom(7);
-  map.setMaxZoom(15);
-  let bounds = [
-      [-73.8, 42.5], // [west, south]
-      [-71.7, 43.6]  // [east, north]
-  ];
-  map.setMaxBounds(bounds);
+  map.setMinZoom(11);
+  map.setMaxZoom(20);
 
   map.on('load', () => {
-    map.addSource('vt', {
-        type: "raster",
-        scheme: "tms",
-        tiles: ["https://pbogden.github.io/framework-map/webmap/{z}/{x}/{y}.png"],
+    map.addSource("contours", {
+          type: "geojson",
+          data: data,
     });
-    map.addLayer({
-        id: 'vt',
-        type: 'raster',
-        source: 'vt',
-        paint: {'raster-opacity': .5},
-    })
-  });
-return {div,map,bounds};
-}});
 
-define({id: "4650f014", inputs: ["map","opacity"], body: (map,opacity) => {
-map.isStyleLoaded() // don't attempt to change things unless layer is actually loaded
-  ? map.setPaintProperty("vt", "raster-opacity", opacity)
-  : null;
+    map.addLayer({
+      'id': 'portland',
+      'source': 'contours',
+            'type': 'line',
+            'paint': {
+                'line-color': '#000',
+                'line-width': 1,
+            }
+    });
+
+  });
+return {div,map};
 }});
 
 </script>
@@ -90,9 +108,9 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
   </ol>
   <ol>
     <li class="observablehq-link"><a href="./">Vermont</a></li>
-    <li class="observablehq-link observablehq-link-active"><a href="./tiles">Vermont tiles</a></li>
+    <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
     <li class="observablehq-link"><a href="./portland">Portland</a></li>
-    <li class="observablehq-link"><a href="./portland-tiles">Portland tiles</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./portland-tiles">Portland tiles</a></li>
     <li class="observablehq-link"><a href="./satellite">Satellite tiles</a></li>
   </ol>
 </nav>
@@ -103,16 +121,15 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<h1 id="vermont-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont-tiles">Vermont tiles</a></h1>
-<p>This version uses map tiles instead of a single PNG.</p>
+<h1 id="portland-xyz-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#portland-xyz-tiles">Portland xyz tiles</a></h1>
+<p>Testing -- elevation contours from Maine GIS</p>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
-<div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
-<div class="observablehq observablehq--block"><!--:62fca0f2:--></div>
-<div class="observablehq observablehq--block"><!--:4650f014:--></div>
+<div class="observablehq observablehq--block"><!--:421a72ed:--></div>
+<div class="observablehq observablehq--block"><!--:b64b264a:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./"><span>Vermont</span></a><a rel="next" href="./portland"><span>Portland</span></a></nav>
+<nav><a rel="prev" href="./portland"><span>Portland</span></a><a rel="next" href="./satellite"><span>Satellite tiles</span></a></nav>
 <div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-12T08:28:18">Dec 12, 2024</a>.</div>
 </footer>
 </div>

@@ -29,7 +29,7 @@ const data = FileAttachment("./data/portland_filtered.geojson").json();
 return {data};
 }});
 
-define({id: "ed4490a2", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
+define({id: "94e79926", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -41,8 +41,8 @@ const map = new maplibregl.Map({
   maplibreLogo: true,
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
-//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC",
+//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
+    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH', // YES -- 127.0.0.1
   scrollZoom: true
 })
 
@@ -63,7 +63,7 @@ const map = new maplibregl.Map({
       'source': 'contours',
             'type': 'line',
             'paint': {
-                'line-color': '#000',
+                'line-color': '#f00',
                 'line-width': 1,
             }
     });
@@ -84,6 +84,7 @@ return {div,map};
     <li class="observablehq-link"><a href="./">Vermont</a></li>
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland</a></li>
+    <li class="observablehq-link"><a href="./portland-tiles">Portland tiles</a></li>
     <li class="observablehq-link"><a href="./satellite">Satellite tiles</a></li>
   </ol>
 </nav>
@@ -99,10 +100,10 @@ return {div,map};
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:421a72ed:--></div>
-<div class="observablehq observablehq--block"><!--:ed4490a2:--></div>
+<div class="observablehq observablehq--block"><!--:94e79926:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./satellite"><span>Satellite tiles</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-12T06:31:30">Dec 12, 2024</a>.</div>
+<nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./portland-tiles"><span>Portland tiles</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-12T08:28:18">Dec 12, 2024</a>.</div>
 </footer>
 </div>

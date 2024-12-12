@@ -24,8 +24,8 @@ const map = new maplibregl.Map({
   maplibreLogo: true,
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
-//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC",
+//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
+    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH', // YES -- 127.0.0.1
   scrollZoom: true
 })
 
@@ -46,7 +46,7 @@ const map = new maplibregl.Map({
       'source': 'contours',
             'type': 'line',
             'paint': {
-                'line-color': '#000',
+                'line-color': '#f00',
                 'line-width': 1,
             }
     });
