@@ -25,7 +25,7 @@ const map = new maplibregl.Map({
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
-  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC",
+  style: "https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL",
   scrollZoom: true
 })
 

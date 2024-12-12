@@ -10,6 +10,7 @@ export default {
    {name: "Vermont", path: "/"},
    {name: "Vermont tiles", path: "/tiles"},
    {name: "Portland", path: "/portland"},
+   {name: "Satellite tiles", path: "/satellite"},
   ]
   //   {
   //     name: "Examples",

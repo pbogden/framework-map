@@ -29,7 +29,7 @@ const data = FileAttachment("./data/portland_filtered.geojson").json();
 return {data};
 }});
 
-define({id: "c2dc6f93", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
+define({id: "ed4490a2", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -41,7 +41,8 @@ const map = new maplibregl.Map({
   maplibreLogo: true,
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
-  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
+  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC",
   scrollZoom: true
 })
 
@@ -83,6 +84,7 @@ return {div,map};
     <li class="observablehq-link"><a href="./">Vermont</a></li>
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland</a></li>
+    <li class="observablehq-link"><a href="./satellite">Satellite tiles</a></li>
   </ol>
 </nav>
 <script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -97,10 +99,10 @@ return {div,map};
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:421a72ed:--></div>
-<div class="observablehq observablehq--block"><!--:c2dc6f93:--></div>
+<div class="observablehq observablehq--block"><!--:ed4490a2:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-08T17:56:19">Dec 8, 2024</a>.</div>
+<nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./satellite"><span>Satellite tiles</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-12T06:31:30">Dec 12, 2024</a>.</div>
 </footer>
 </div>
