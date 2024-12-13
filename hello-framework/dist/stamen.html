@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Portland | Vermont</title>
+<title>Raster tiles | Vermont</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.css">
@@ -29,7 +29,7 @@ const data = FileAttachment("./data/portland_filtered.geojson").json();
 return {data};
 }});
 
-define({id: "94e79926", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
+define({id: "b64b264a", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -41,8 +41,34 @@ const map = new maplibregl.Map({
   maplibreLogo: true,
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
-//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
-    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH', // YES -- 127.0.0.1
+//  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // works local and remote
+//  style: "https://api.maptiler.com/maps/hybrid/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vL", // localhost only
+//  style: "https://api.maptiler.com/tiles/satellite-v2/tiles.json?key=CWCYPYhJwnzgcYMXp0oC", // doesn't work
+       style: {
+            'version': 8,
+            'sources': {
+                'raster-tiles': {
+                    'type': 'raster',
+                    'tiles': [
+                        // NOTE: Layers from Stadia Maps do not require an API key for localhost development or most production
+                        // web deployments. See https://docs.stadiamaps.com/authentication/ for details.
+                        'https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg'
+                    ],
+                    'tileSize': 256,
+                    'attribution':
+                        'Map tiles by <a target="_blank" href="https://stamen.com">Stamen Design</a>; Hosting by <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a>. Data &copy; <a href="https://www.openstreetmap.org/about" target="_blank">OpenStreetMap</a> contributors'
+                }
+            },
+            'layers': [
+                {
+                    'id': 'simple-tiles',
+                    'type': 'raster',
+                    'source': 'raster-tiles',
+                    'minzoom': 0,
+                    'maxzoom': 22
+                }
+            ]
+        },
   scrollZoom: true
 })
 
@@ -63,7 +89,7 @@ const map = new maplibregl.Map({
       'source': 'contours',
             'type': 'line',
             'paint': {
-                'line-color': '#f00',
+                'line-color': '#000',
                 'line-width': 1,
             }
     });
@@ -83,8 +109,8 @@ return {div,map};
   <ol>
     <li class="observablehq-link"><a href="./">Vermont</a></li>
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
-    <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland</a></li>
-    <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
+    <li class="observablehq-link"><a href="./portland">Portland</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./stamen">Stamen</a></li>
   </ol>
 </nav>
 <script>{Object.assign(document.createElement("a"),{href:""}).password&&location.replace(location.href);const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -94,15 +120,15 @@ return {div,map};
 </aside>
 <div id="observablehq-center">
 <main id="observablehq-main" class="observablehq">
-<h1 id="portland" tabindex="-1"><a class="observablehq-header-anchor" href="#portland">Portland</a></h1>
-<p>Testing -- elevation contours from Maine GIS + satellite</p>
+<h1 id="raster-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#raster-tiles">Raster tiles</a></h1>
+<p>Stadia Maps -- <a href="https://docs.stadiamaps.com/raster/" target="_blank" rel="noopener noreferrer">https://docs.stadiamaps.com/raster/</a> -- domain-based authentication</p>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:421a72ed:--></div>
-<div class="observablehq observablehq--block"><!--:94e79926:--></div>
+<div class="observablehq observablehq--block"><!--:b64b264a:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
+<nav><a rel="prev" href="./portland"><span>Portland</span></a></nav>
 <div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-13T04:32:51">Dec 13, 2024</a>.</div>
 </footer>
 </div>

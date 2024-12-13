@@ -1,6 +1,6 @@
-# Portland xyz tiles
+# Raster tiles
 
-Testing -- elevation contours from Maine GIS
+Stadia Maps -- https://docs.stadiamaps.com/raster/ -- domain-based authentication
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 

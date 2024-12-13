@@ -1,6 +1,6 @@
 # Portland
 
-Testing -- elevation contours from Maine GIS
+Testing -- elevation contours from Maine GIS + satellite
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
