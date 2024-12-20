@@ -1,6 +1,6 @@
-# Raster tiles
+# Stamen
 
-Testing domain-based authentication with tiles from Stadia Maps -- https://docs.stadiamaps.com/raster/
+Testing -- [Stadia Maps tiles](https://docs.stadiamaps.com/raster/) with domain-based authentication & ME GIS contours
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
