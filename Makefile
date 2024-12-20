@@ -1,6 +1,6 @@
 deploy:
-	cd hello-framework; yarn build
-	cp -r hello-framework/dist/* docs
+	cd framework; yarn build
+	cp -r framework/dist/* docs
 
 # Generate a PNG to add as a layer on a web map
 png:
