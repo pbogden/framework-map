@@ -1,6 +1,6 @@
 # Portland
 
-Testing -- selected elevation contours from Maine GIS + Map Tiler satellite
+Testing -- MapTiler satellite tiles & selected elevation contours from Maine GIS
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
@@ -25,7 +25,7 @@ const map = new maplibregl.Map({
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
-    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH', // YES -- 127.0.0.1
+    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true
 })
 
