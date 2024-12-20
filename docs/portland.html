@@ -33,7 +33,7 @@ const data = FileAttachment("./data/portland_filtered.geojson").json();
 return {data};
 }});
 
-define({id: "94e79926", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
+define({id: "b178035c", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -46,7 +46,7 @@ const map = new maplibregl.Map({
   div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
-    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH', // YES -- 127.0.0.1
+    style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true
 })
 
@@ -91,6 +91,7 @@ return {div,map};
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
+    <li class="observablehq-link"><a href="./contours">Contours</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -101,15 +102,15 @@ return {div,map};
 </aside>
 <main id="observablehq-main" class="observablehq">
 <h1 id="portland" tabindex="-1"><a class="observablehq-header-anchor" href="#portland">Portland</a></h1>
-<p>Testing -- selected elevation contours from Maine GIS + Map Tiler satellite</p>
+<p>Testing -- MapTiler satellite tiles &amp; selected elevation contours from Maine GIS</p>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:421a72ed:--></div>
-<div class="observablehq observablehq--block"><!--:94e79926:--></div>
+<div class="observablehq observablehq--block"><!--:b178035c:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-20T05:50:44">Dec 20, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-20T06:29:59">Dec 20, 2024</a>.</div>
 </footer>
 </div>
 </body>
