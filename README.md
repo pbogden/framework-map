@@ -35,24 +35,24 @@ gdal_translate data/webmap.tif data/webmap.png
 
 [Framework](https://observablehq.com/framework/) has great documentation.
 See: [getting started](https://observablehq.com/framework/getting-started).
-The `./hello-framework` directory is a barebones project created with
+The `./framework` directory is a barebones project created with
 ```
 yarn create @observablehq
 ```
 
 Copy the PNG into the data directory of the Framework project. For example:
 ```
-cp data/webmap.png hello-framework/docs/data
+cp data/webmap.png framework/docs/data
 ```
 
-`hello-framework/docs/map.md` has a Framework version of the Observable notebook: 
+`framework/docs/map.md` has a Framework version of the Observable notebook: 
 [Vermont](https://observablehq.com/@pbogden/vermont).
 
 Deploy on github pages, in this case served from `./docs`
 ```
 mkdir docs
 touch docs/.nojekyll
-cd hello-framework
+cd framework
 yarn build
 cp -r dist/* ../docs
 ```
@@ -74,5 +74,5 @@ Create the tiles with:
 gdal2tiles.py data/webmap.tif docs/webmap
 ```
 
-`hello-framework/docs/tiles.md` has a Framework version of the observable notebook: 
+`framework/docs/tiles.md` has a Framework version of the observable notebook: 
 [Vermont tiles](https://observablehq.com/@pbogden/vermont-tiles).
