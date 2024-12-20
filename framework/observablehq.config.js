@@ -11,6 +11,7 @@ export default {
    {name: "Vermont tiles", path: "/tiles"},
    {name: "Portland", path: "/portland"},
    {name: "Stamen", path: "/stamen"},
+   {name: "Contours", path: "/contours"},
   ],
   // pages: [
   //   {

@@ -1,6 +1,6 @@
 # Stamen
 
-Testing -- [Stadia Maps tiles](https://docs.stadiamaps.com/raster/) with domain-based authentication & ME GIS contours
+Testing -- [Stadia Maps tiles](https://docs.stadiamaps.com/raster/) with domain authentication & some ME GIS contours
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
