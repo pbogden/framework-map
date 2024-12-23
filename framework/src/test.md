@@ -1,6 +1,6 @@
 # Contours
 
-Testing -- Dynamic DEM contours using the [maplibre-contour plugin](https://github.com/onthegomap/maplibre-contour) 
+Testing -- if you zoom in, you'll see contours based on the ME lidar data -- but something's wrong!
 
 [Portland DEM Contours](https://observablehq.com/@pbogden/portland-dem-contours) -- my notebook
 
