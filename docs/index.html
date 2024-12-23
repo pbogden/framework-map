@@ -107,6 +107,7 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
     <li class="observablehq-link"><a href="./portland">Portland</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
     <li class="observablehq-link"><a href="./contours">Contours</a></li>
+    <li class="observablehq-link"><a href="./test">test</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -125,7 +126,7 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="next" href="./tiles"><span>Vermont tiles</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-20T06:29:59">Dec 20, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-23T08:55:37">Dec 23, 2024</a>.</div>
 </footer>
 </div>
 </body>

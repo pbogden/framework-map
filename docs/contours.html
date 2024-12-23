@@ -26,9 +26,10 @@ const [{default: maplibregl}, {default: mlcontour}] = await Promise.all([import(
 return {maplibregl,mlcontour};
 }});
 
-define({id: "f141162b", inputs: ["mlcontour","maplibregl"], outputs: ["demSource"], body: (mlcontour,maplibregl) => {
+define({id: "2a242555", inputs: ["mlcontour","maplibregl"], outputs: ["demSource"], body: (mlcontour,maplibregl) => {
 const demSource = new mlcontour.DemSource({
     url: "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png",
+//    url: "https://pbogden.github.io/geo/tiles/{z}/{x}/{y}.png",
     encoding: "terrarium",
     maxzoom: 13,
 });
@@ -123,6 +124,7 @@ return {div,map};
     <li class="observablehq-link"><a href="./portland">Portland</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./contours">Contours</a></li>
+    <li class="observablehq-link"><a href="./test">test</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -137,12 +139,12 @@ return {div,map};
 <p><a href="https://observablehq.com/@pbogden/portland-dem-contours" target="_blank" rel="noopener noreferrer">Portland DEM Contours</a> -- my notebook</p>
 <link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
 <div class="observablehq observablehq--block"><!--:77d58196:--></div>
-<div class="observablehq observablehq--block"><!--:f141162b:--></div>
+<div class="observablehq observablehq--block"><!--:2a242555:--></div>
 <div class="observablehq observablehq--block"><!--:58892344:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-20T06:29:59">Dec 20, 2024</a>.</div>
+<nav><a rel="prev" href="./stamen"><span>Stamen</span></a><a rel="next" href="./test"><span>test</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-23T08:55:37">Dec 23, 2024</a>.</div>
 </footer>
 </div>
 </body>

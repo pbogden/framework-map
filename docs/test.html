@@ -4,84 +4,112 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="generator" content="Observable Framework v1.13.0">
-<title>Vermont tiles | map</title>
+<title>Contours | map</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="preload" as="style" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
 <link rel="modulepreload" href="./_observablehq/client.553de7a2.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
 <link rel="modulepreload" href="./_observablehq/stdlib.30061640.js">
 <link rel="modulepreload" href="./_npm/maplibre-gl@4.0.2/0d47aef8.js">
-<link rel="modulepreload" href="./_observablehq/stdlib/inputs.2fc8e13b.js">
-<link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
-<link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
+<link rel="modulepreload" href="./_npm/maplibre-contour@0.0.8/b07566a4.js">
 <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
 <script type="module">
 
 import {define} from "./_observablehq/client.553de7a2.js";
 
-define({id: "6465dfc0", outputs: ["maplibregl"], body: async () => {
-const {default: maplibregl} = await import("./_npm/maplibre-gl@4.0.2/0d47aef8.js");
+define({id: "77d58196", outputs: ["maplibregl","mlcontour"], body: async () => {
+const [{default: maplibregl}, {default: mlcontour}] = await Promise.all([import("./_npm/maplibre-gl@4.0.2/0d47aef8.js"), import("./_npm/maplibre-contour@0.0.8/b07566a4.js")]);
 
-return {maplibregl};
+return {maplibregl,mlcontour};
 }});
 
-define({id: "f0c8cbc0", inputs: ["view","Inputs"], outputs: ["opacity"], body: (view,Inputs) => {
-const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFixed(2)}))
-return {opacity};
+define({id: "2779b634", inputs: ["mlcontour","maplibregl"], outputs: ["demSource"], body: (mlcontour,maplibregl) => {
+const demSource = new mlcontour.DemSource({
+//    url: "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png",
+    url: "https://pbogden.github.io/geo/tiles/{z}/{x}/{y}.png",
+    encoding: "mapbox",
+    maxzoom: 18,
+});
+
+demSource.setupMaplibre(maplibregl);
+return {demSource};
 }});
 
-define({id: "62fca0f2", inputs: ["display","maplibregl"], outputs: ["div","map","bounds"], body: (display,maplibregl) => {
+define({id: "4111960b", inputs: ["display","maplibregl","demSource","invalidation"], outputs: ["div","map"], body: (display,maplibregl,demSource,invalidation) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
+
 const map = new maplibregl.Map({
-  container: div,
   // interactive: false,
   boxZoom: true, // use shift+drag to create bounding box, "zoom to" follows
   pitch: 0,
   bearing: 0,
   maplibreLogo: true,
-  div,
-  center: [-72.8, 43.1], zoom: 10, // Vermont
+  container: div,
+  center: [-70.2568, 43.6591], zoom: 12, // Portland, ME
   style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
   scrollZoom: true
-})
+});
 
- map.addControl(new maplibregl.NavigationControl());
+map.addControl(new maplibregl.NavigationControl());
 
-  // Set map limits
-  map.setMinZoom(7);
-  map.setMaxZoom(15);
-  let bounds = [
-      [-73.8, 42.5], // [west, south]
-      [-71.7, 43.6]  // [east, north]
-  ];
-  map.setMaxBounds(bounds);
+// Set map limits
+map.setMinZoom(10);
+map.setMaxZoom(18);
 
   map.on('load', () => {
-    map.addSource('vt', {
-        type: "raster",
-        scheme: "tms",
-        tiles: ["https://pbogden.github.io/framework-map/webmap/{z}/{x}/{y}.png"],
+    map.addSource("contour-source", {
+      type: "vector",
+      tiles: [
+        demSource.contourProtocolUrl({
+          // convert meters to feet, default=1 for meters
+          multiplier: 3.28084,
+          thresholds: {
+            10: 10,
+            11: 10,
+            12: 5,
+            13: 5,
+            14: 5,
+            15: 5,
+            // zoom: [minor, major]
+            //  9: [200, 1000],
+            // 10: [200, 1000],
+            // 11: [200, 1000],
+            // 12: [100, 500],
+            // 14: [50, 200],
+            // 15: [20, 100],
+          },
+          // optional, override vector tile parameters:
+          contourLayer: "contours",
+          elevationKey: "ele",
+          levelKey: "level",
+          extent: 4096,
+          buffer: 1,
+        }),
+      ],
+      maxzoom: 15,
     });
+    
     map.addLayer({
-        id: 'vt',
-        type: 'raster',
-        source: 'vt',
-        paint: {'raster-opacity': .5},
-    })
-  });
-return {div,map,bounds};
-}});
+      id: "contour-lines",
+      type: "line",
+      source: "contour-source",
+      "source-layer": "contours",
+      paint: {
+        "line-color": "rgba(0,0,0, 50%)",
+        // level = highest index in thresholds array the elevation is a multiple of
+        "line-width": ["match", ["get", "level"], 1, 1, 0.5],
+      },
+    });
+    
+  })
 
-define({id: "4650f014", inputs: ["map","opacity"], body: (map,opacity) => {
-map.isStyleLoaded() // don't attempt to change things unless layer is actually loaded
-  ? map.setPaintProperty("vt", "raster-opacity", opacity)
-  : null;
+// resolve(map); // See: https://observablehq.com/@mbostock/mapbox-fly-to
+invalidation.then(() => map.remove());
+return {div,map};
 }});
 
 </script>
@@ -96,11 +124,11 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
   </ol>
   <ol>
     <li class="observablehq-link"><a href="./">Vermont</a></li>
-    <li class="observablehq-link observablehq-link-active"><a href="./tiles">Vermont tiles</a></li>
+    <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
     <li class="observablehq-link"><a href="./portland">Portland</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
     <li class="observablehq-link"><a href="./contours">Contours</a></li>
-    <li class="observablehq-link"><a href="./test">test</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./test">test</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -110,16 +138,16 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 </nav>
 </aside>
 <main id="observablehq-main" class="observablehq">
-<h1 id="vermont-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont-tiles">Vermont tiles</a></h1>
-<p>This version uses map tiles instead of a single PNG.</p>
-<link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
-<div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
-<div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
-<div class="observablehq observablehq--block"><!--:62fca0f2:--></div>
-<div class="observablehq observablehq--block"><!--:4650f014:--></div>
+<h1 id="contours" tabindex="-1"><a class="observablehq-header-anchor" href="#contours">Contours</a></h1>
+<p>Testing -- if you zoom in, you'll see contours based on the ME lidar data -- but something's wrong!</p>
+<p><a href="https://observablehq.com/@pbogden/portland-dem-contours" target="_blank" rel="noopener noreferrer">Portland DEM Contours</a> -- my notebook</p>
+<link href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css" rel="stylesheet">
+<div class="observablehq observablehq--block"><!--:77d58196:--></div>
+<div class="observablehq observablehq--block"><!--:2779b634:--></div>
+<div class="observablehq observablehq--block"><!--:4111960b:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./"><span>map</span></a><a rel="next" href="./portland"><span>Portland</span></a></nav>
+<nav><a rel="prev" href="./contours"><span>Contours</span></a></nav>
 <div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-23T08:55:37">Dec 23, 2024</a>.</div>
 </footer>
 </div>
