@@ -12,6 +12,7 @@ export default {
    {name: "Portland", path: "/portland"},
    {name: "Stamen", path: "/stamen"},
    {name: "Contours", path: "/contours"},
+   {name: "test", path: "/test"},
   ],
   // pages: [
   //   {

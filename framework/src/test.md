@@ -13,10 +13,10 @@ import mlcontour from "npm:maplibre-contour";
 
 ```js
 const demSource = new mlcontour.DemSource({
-    url: "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png",
-//    url: "https://pbogden.github.io/geo/tiles/{z}/{x}/{y}.png",
-    encoding: "terrarium",
-    maxzoom: 13,
+//    url: "https://elevation-tiles-prod.s3.amazonaws.com/terrarium/{z}/{x}/{y}.png",
+    url: "https://pbogden.github.io/geo/tiles/{z}/{x}/{y}.png",
+    encoding: "mapbox",
+    maxzoom: 18,
 });
 
 demSource.setupMaplibre(maplibregl);
@@ -42,7 +42,7 @@ map.addControl(new maplibregl.NavigationControl());
 
 // Set map limits
 map.setMinZoom(10);
-map.setMaxZoom(15);
+map.setMaxZoom(18);
 
   map.on('load', () => {
     map.addSource("contour-source", {
@@ -53,7 +53,11 @@ map.setMaxZoom(15);
           multiplier: 3.28084,
           thresholds: {
             10: 10,
+            11: 10,
             12: 5,
+            13: 5,
+            14: 5,
+            15: 5,
             // zoom: [minor, major]
             //  9: [200, 1000],
             // 10: [200, 1000],
