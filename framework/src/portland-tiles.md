@@ -1,6 +1,6 @@
 # Vermont tiles
 
-This version uses map tiles instead of a single PNG.
+Color tiles created from ME GIS lidar GeoTIFF
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
