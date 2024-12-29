@@ -1,4 +1,4 @@
-# Vermont tiles
+# Portland tiles
 
 Color tiles created from ME GIS lidar GeoTIFF
 
@@ -23,7 +23,7 @@ const map = new maplibregl.Map({
   bearing: 0,
   maplibreLogo: true,
   div,
-  center: [-70.2568, 43.6591], zoom: 12, // Portland
+  center: [-70.2568, 43.6591], zoom: 11, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
   style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true
