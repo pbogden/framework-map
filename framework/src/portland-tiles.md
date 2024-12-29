@@ -13,6 +13,10 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 ```
 
 ```js
+const toggle = view(Inputs.toggle({label: "Toggle layer", value: true}))
+```
+
+```js
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -57,6 +61,6 @@ const map = new maplibregl.Map({
 
 ```js
 map.isStyleLoaded() // don't attempt to change things unless layer is actually loaded
-  ? map.setPaintProperty("vt", "raster-opacity", opacity)
+  ? map.setPaintProperty("vt", "raster-opacity", toggle ? opacity : 0)
   : null;
 ```
