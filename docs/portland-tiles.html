@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta name="generator" content="Observable Framework v1.13.0">
-<title>Vermont tiles | map</title>
+<title>Portland tiles | map</title>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
@@ -35,7 +35,7 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 return {opacity};
 }});
 
-define({id: "2f1c929c", inputs: ["display","maplibregl"], outputs: ["div","map"], body: (display,maplibregl) => {
+define({id: "ab694e65", inputs: ["display","maplibregl"], outputs: ["div","map"], body: (display,maplibregl) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -46,7 +46,7 @@ const map = new maplibregl.Map({
   bearing: 0,
   maplibreLogo: true,
   div,
-  center: [-70.2568, 43.6591], zoom: 12, // Portland
+  center: [-70.2568, 43.6591], zoom: 11, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
   style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true
@@ -111,17 +111,17 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 </nav>
 </aside>
 <main id="observablehq-main" class="observablehq">
-<h1 id="vermont-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#vermont-tiles">Vermont tiles</a></h1>
+<h1 id="portland-tiles" tabindex="-1"><a class="observablehq-header-anchor" href="#portland-tiles">Portland tiles</a></h1>
 <p>Color tiles created from ME GIS lidar GeoTIFF</p>
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
-<div class="observablehq observablehq--block"><!--:2f1c929c:--></div>
+<div class="observablehq observablehq--block"><!--:ab694e65:--></div>
 <div class="observablehq observablehq--block"><!--:4650f014:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./portland"><span>Portland</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T07:57:02">Dec 29, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T07:59:20">Dec 29, 2024</a>.</div>
 </footer>
 </div>
 </body>
