@@ -27,7 +27,7 @@ const map = new maplibregl.Map({
   bearing: 0,
   maplibreLogo: true,
   div,
-  center: [-70.2568, 43.6591], zoom: 11, // Portland
+  center: [-70.2627, 43.6750], zoom: 10.8, // Centered on ME GIS GeoTIFF
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
   style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true

@@ -40,7 +40,7 @@ const toggle = view(Inputs.toggle({label: "Toggle layer", value: true}))
 return {toggle};
 }});
 
-define({id: "ab694e65", inputs: ["display","maplibregl"], outputs: ["div","map"], body: (display,maplibregl) => {
+define({id: "7e919096", inputs: ["display","maplibregl"], outputs: ["div","map"], body: (display,maplibregl) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
 const map = new maplibregl.Map({
@@ -51,7 +51,7 @@ const map = new maplibregl.Map({
   bearing: 0,
   maplibreLogo: true,
   div,
-  center: [-70.2568, 43.6591], zoom: 11, // Portland
+  center: [-70.2627, 43.6750], zoom: 10.8, // Centered on ME GIS GeoTIFF
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json",
   style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
   scrollZoom: true
@@ -122,12 +122,12 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
 <div class="observablehq observablehq--block"><!--:303cdb30:--></div>
-<div class="observablehq observablehq--block"><!--:ab694e65:--></div>
+<div class="observablehq observablehq--block"><!--:7e919096:--></div>
 <div class="observablehq observablehq--block"><!--:1fefffea:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./portland"><span>Portland</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T08:12:13">Dec 29, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T08:19:57">Dec 29, 2024</a>.</div>
 </footer>
 </div>
 </body>
