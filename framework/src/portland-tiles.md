@@ -1,6 +1,6 @@
 # Portland tiles
 
-Color tiles created from ME GIS lidar GeoTIFF
+Color tiles created from a [US Interagency Elevation Inventory](https://coast.noaa.gov/inventory/) GeoTIFF.
 
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 
