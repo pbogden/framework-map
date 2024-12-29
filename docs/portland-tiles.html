@@ -35,6 +35,11 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 return {opacity};
 }});
 
+define({id: "303cdb30", inputs: ["view","Inputs"], outputs: ["toggle"], body: (view,Inputs) => {
+const toggle = view(Inputs.toggle({label: "Toggle layer", value: true}))
+return {toggle};
+}});
+
 define({id: "ab694e65", inputs: ["display","maplibregl"], outputs: ["div","map"], body: (display,maplibregl) => {
 const div = display(document.createElement("div"));
 div.style = "height: 400px;";
@@ -79,9 +84,9 @@ const map = new maplibregl.Map({
 return {div,map};
 }});
 
-define({id: "4650f014", inputs: ["map","opacity"], body: (map,opacity) => {
+define({id: "1fefffea", inputs: ["map","toggle","opacity"], body: (map,toggle,opacity) => {
 map.isStyleLoaded() // don't attempt to change things unless layer is actually loaded
-  ? map.setPaintProperty("vt", "raster-opacity", opacity)
+  ? map.setPaintProperty("vt", "raster-opacity", toggle ? opacity : 0)
   : null;
 }});
 
@@ -116,12 +121,13 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
+<div class="observablehq observablehq--block"><!--:303cdb30:--></div>
 <div class="observablehq observablehq--block"><!--:ab694e65:--></div>
-<div class="observablehq observablehq--block"><!--:4650f014:--></div>
+<div class="observablehq observablehq--block"><!--:1fefffea:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./portland"><span>Portland</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T07:59:20">Dec 29, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T08:12:13">Dec 29, 2024</a>.</div>
 </footer>
 </div>
 </body>
