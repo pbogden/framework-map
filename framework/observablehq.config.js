@@ -9,7 +9,7 @@ export default {
   pages: [
    {name: "Vermont", path: "/"},
    {name: "Vermont tiles", path: "/tiles"},
-   {name: "Portland", path: "/portland"},
+   {name: "Portland contours", path: "/portland"},
    {name: "Portland tiles", path: "/portland-tiles"},
    {name: "Stamen", path: "/stamen"},
    {name: "Contours", path: "/contours"},
