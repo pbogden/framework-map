@@ -13,16 +13,13 @@ const data = FileAttachment("data/portland_filtered.geojson").json();
 ```
 
 ```js
-const div = display(document.createElement("div"));
-div.style = "height: 400px;";
 const map = new maplibregl.Map({
-  container: div,
+  container: "map",
   // interactive: false,
   boxZoom: true, // use shift+drag to create bounding box, "zoom to" follows
   pitch: 0,
   bearing: 0,
   maplibreLogo: true,
-  div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
     style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
@@ -51,5 +48,43 @@ const map = new maplibregl.Map({
             }
     });
 
+    map.on('mousemove', (e) => {
+        document.getElementById('info').innerHTML =
+            // e.point is the x, y coordinates of the mousemove event relative
+            // to the top-left corner of the map
+            `${JSON.stringify(e.point)
+            }<br />${
+                // e.lngLat is the longitude, latitude geographical position of the event
+                JSON.stringify(e.lngLat.wrap())}`;
+    });
+
   });
 ```
+
+<div id="mycontainer">
+  <div id="map"></div>
+  <div id="info"></div>
+</div>
+<style>
+    #mycontainer {
+        position: relative;
+    }
+    #map {
+        height: 400px;
+    }
+    #info {
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 50%;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #222;
+        background: #fff;
+    }
+</style>
