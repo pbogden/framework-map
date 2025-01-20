@@ -10,15 +10,15 @@
 <link rel="preload" as="style" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
-<link rel="modulepreload" href="./_observablehq/client.553de7a2.js">
+<link rel="modulepreload" href="./_observablehq/client.955c6546.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
-<link rel="modulepreload" href="./_observablehq/stdlib.30061640.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
 <link rel="modulepreload" href="./_npm/maplibre-gl@4.0.2/0d47aef8.js">
 <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
 <script type="module">
 
-import {define} from "./_observablehq/client.553de7a2.js";
-import {registerFile} from "./_observablehq/stdlib.30061640.js";
+import {define} from "./_observablehq/client.955c6546.js";
+import {registerFile} from "./_observablehq/stdlib.95bfbf7e.js";
 
 registerFile("./data/portland_filtered.geojson", {"name":"./data/portland_filtered.geojson","mimeType":"application/geo+json","path":"./_file/data/portland_filtered.2f0526df.geojson","lastModified":1734691573554,"size":30549548});
 
@@ -33,17 +33,14 @@ const data = FileAttachment("./data/portland_filtered.geojson").json();
 return {data};
 }});
 
-define({id: "b178035c", inputs: ["display","maplibregl","data"], outputs: ["div","map"], body: (display,maplibregl,data) => {
-const div = display(document.createElement("div"));
-div.style = "height: 400px;";
+define({id: "3d2b640d", inputs: ["maplibregl","data"], outputs: ["map"], body: (maplibregl,data) => {
 const map = new maplibregl.Map({
-  container: div,
+  container: "map",
   // interactive: false,
   boxZoom: true, // use shift+drag to create bounding box, "zoom to" follows
   pitch: 0,
   bearing: 0,
   maplibreLogo: true,
-  div,
   center: [-70.2568, 43.6591], zoom: 12, // Portland
 //  style: "https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json", // YES
     style: 'https://api.maptiler.com/maps/hybrid/style.json?key=xd89AQeIL88tBv6PUuRH',
@@ -72,8 +69,20 @@ const map = new maplibregl.Map({
             }
     });
 
+    map.on('mousemove', (e) => {
+        document.getElementById('info').innerHTML =
+            // e.point is the x, y coordinates of the mousemove event relative
+            // to the top-left corner of the map
+            `${JSON.stringify(e.point)}
+             <br />${
+              'Zoom: ' + map.getZoom()}
+             <br />${
+                // e.lngLat is the longitude, latitude geographical position of the event
+                JSON.stringify(e.lngLat.wrap())}`;
+    });
+
   });
-return {div,map};
+return {map};
 }});
 
 </script>
@@ -89,10 +98,11 @@ return {div,map};
   <ol>
     <li class="observablehq-link"><a href="./">Vermont</a></li>
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
-    <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland</a></li>
+    <li class="observablehq-link observablehq-link-active"><a href="./portland">Portland contours</a></li>
     <li class="observablehq-link"><a href="./portland-tiles">Portland tiles</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
     <li class="observablehq-link"><a href="./contours">Contours</a></li>
+    <li class="observablehq-link"><a href="./click">Click</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -107,11 +117,38 @@ return {div,map};
 <link rel="stylesheet" type="text/css" href="https://unpkg.com/maplibre-gl@4.0.2/dist/maplibre-gl.css">
 <div class="observablehq observablehq--block"><!--:6465dfc0:--></div>
 <div class="observablehq observablehq--block"><!--:421a72ed:--></div>
-<div class="observablehq observablehq--block"><!--:b178035c:--></div>
+<div class="observablehq observablehq--block"><!--:3d2b640d:--></div>
+<div id="mycontainer">
+  <div id="map"></div>
+  <div id="info"></div>
+</div>
+<style>
+    #mycontainer {
+        position: relative;
+    }
+    #map {
+        height: 400px;
+    }
+    #info {
+        display: block;
+        position: absolute;
+        top: 20px;
+        left: 50%;
+        transform: translate(-50%);
+        width: 50%;
+        padding: 10px;
+        border: none;
+        border-radius: 3px;
+        font-size: 12px;
+        text-align: center;
+        color: #222;
+        background: #fff;
+    }
+</style>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./tiles"><span>Vermont tiles</span></a><a rel="next" href="./portland-tiles"><span>Portland tiles</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T11:19:25">Dec 29, 2024</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-20T08:05:32">Jan 20, 2025</a>.</div>
 </footer>
 </div>
 </body>

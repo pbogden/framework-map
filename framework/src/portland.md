@@ -54,6 +54,8 @@ const map = new maplibregl.Map({
             // to the top-left corner of the map
             `${JSON.stringify(e.point)}
              <br />${
+              'Zoom: ' + map.getZoom()}
+             <br />${
                 // e.lngLat is the longitude, latitude geographical position of the event
                 JSON.stringify(e.lngLat.wrap())}`;
     });

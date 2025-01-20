@@ -13,6 +13,7 @@ export default {
    {name: "Portland tiles", path: "/portland-tiles"},
    {name: "Stamen", path: "/stamen"},
    {name: "Contours", path: "/contours"},
+   {name: "Click", path: "/click"},
   ],
   // pages: [
   //   {

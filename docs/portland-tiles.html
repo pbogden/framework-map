@@ -12,17 +12,17 @@
 <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,200..900;1,8..60,200..900&amp;display=swap" crossorigin>
 <link rel="stylesheet" type="text/css" href="./_observablehq/theme-air,near-midnight.dcdbf18e.css">
 <link rel="stylesheet" type="text/css" href="./_observablehq/stdlib/inputs.ea9fd553.css">
-<link rel="modulepreload" href="./_observablehq/client.553de7a2.js">
+<link rel="modulepreload" href="./_observablehq/client.955c6546.js">
 <link rel="modulepreload" href="./_observablehq/runtime.9393ab6d.js">
-<link rel="modulepreload" href="./_observablehq/stdlib.30061640.js">
+<link rel="modulepreload" href="./_observablehq/stdlib.95bfbf7e.js">
 <link rel="modulepreload" href="./_npm/maplibre-gl@4.0.2/0d47aef8.js">
-<link rel="modulepreload" href="./_observablehq/stdlib/inputs.2fc8e13b.js">
+<link rel="modulepreload" href="./_observablehq/stdlib/inputs.d397b6a8.js">
 <link rel="modulepreload" href="./_npm/htl@0.3.1/063eb405.js">
 <link rel="modulepreload" href="./_npm/isoformat@0.2.1/c68fbd73.js">
 <link rel="icon" href="./_file/observable.1af93621.png" type="image/png" sizes="32x32">
 <script type="module">
 
-import {define} from "./_observablehq/client.553de7a2.js";
+import {define} from "./_observablehq/client.955c6546.js";
 
 define({id: "6465dfc0", outputs: ["maplibregl"], body: async () => {
 const {default: maplibregl} = await import("./_npm/maplibre-gl@4.0.2/0d47aef8.js");
@@ -103,10 +103,11 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
   <ol>
     <li class="observablehq-link"><a href="./">Vermont</a></li>
     <li class="observablehq-link"><a href="./tiles">Vermont tiles</a></li>
-    <li class="observablehq-link"><a href="./portland">Portland</a></li>
+    <li class="observablehq-link"><a href="./portland">Portland contours</a></li>
     <li class="observablehq-link observablehq-link-active"><a href="./portland-tiles">Portland tiles</a></li>
     <li class="observablehq-link"><a href="./stamen">Stamen</a></li>
     <li class="observablehq-link"><a href="./contours">Contours</a></li>
+    <li class="observablehq-link"><a href="./click">Click</a></li>
   </ol>
 </nav>
 <script>{const e=document.querySelector("#observablehq-sidebar"),t=document.querySelector("#observablehq-sidebar-toggle"),r=sessionStorage.getItem("observablehq-sidebar");r?t.checked=r==="true":t.indeterminate=!0;for(const o of document.querySelectorAll("#observablehq-sidebar summary")){const s=o.parentElement;switch(sessionStorage.getItem(`observablehq-sidebar:${o.textContent}`)){case"true":s.open=!0;break;case"false":s.classList.contains("observablehq-section-active")||(s.open=!1);break}}addEventListener("beforeunload",()=>sessionStorage.setItem("observablehq-sidebar-scrolly",`${e.scrollTop}`));const a=sessionStorage.getItem("observablehq-sidebar-scrolly");a!=null&&(e.style.cssText="overflow: hidden;",e.scrollTop=+a,e.style.cssText="");}</script>
@@ -126,8 +127,8 @@ map.isStyleLoaded() // don't attempt to change things unless layer is actually l
 <div class="observablehq observablehq--block"><!--:1fefffea:--></div>
 </main>
 <footer id="observablehq-footer">
-<nav><a rel="prev" href="./portland"><span>Portland</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2024-12-29T11:19:25">Dec 29, 2024</a>.</div>
+<nav><a rel="prev" href="./portland"><span>Portland contours</span></a><a rel="next" href="./stamen"><span>Stamen</span></a></nav>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-20T08:05:32">Jan 20, 2025</a>.</div>
 </footer>
 </div>
 </body>
