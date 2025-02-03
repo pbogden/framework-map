@@ -26,14 +26,15 @@ map.selectAll("image")
 
 const demData = map.append("g")
 map.on("click", ({offsetX: xs, offsetY: ys}) => {
-    demData.selectAll("image").remove();
-    display(`${xs}, ${ys}`)
-    display(getTile(xs, ys))
-    demData.append(() => getTile(xs, ys));
-  });
+     demData.selectAll("image").remove();
+     display(`${xs}, ${ys}`)
+     demData.append(() => getTile(xs, ys));
+});
 
 display(map.node());
 ```
+
+<div id="tile"></div>
 
 ```js
 const height = 500;
@@ -72,14 +73,53 @@ function getTile(xs, ys) {
   const xt = (x + tx) * k;
   const yt = (y + ty) * k;
 
+  const [xc, yc] = [xs - xt, ys - yt];
+  const [xp, yp] = [Math.floor(tileSize * xc / k), 
+                    Math.floor(tileSize * yc / k)];
+
   const image = d3.create("svg:image")
     .attr("x", xt)
     .attr("y", yt)
     .attr("width", k)
     .attr("height", k)
+    .classed("dem", true)
+    .on("load", () => getPixelValue(xp, yp))
     .attr("href", dem(x, y, z))
+    .node();
   
-  return image.node();
+  return image;
+}
+
+function getPixelValue(xp,yp) {
+  display(`I've been called [${xp}, ${yp}]`)
+  const canvas = d3.create("canvas").attr("height", 256).attr("width", 256).node();
+  const ctx = canvas.getContext("2d");
+
+//  const image = d3.select(map).select(".dem").node();
+  image.crossOrigin = "Anonymous"; // allows "non-authenticated" cross-origin loading of the image
+  
+  ctx.drawImage(image, 0, 0, 256, 256)
+  const imageData = ctx.getImageData(0, 0, 256, 256);
+
+  const dx = 10;
+  const i0 = yp;  // row (0-255 starting from top)
+  const j0 = xp;  // column (0-255 starting from left)
+  for (let i= i0 - dx / 2; i < i0 + dx / 2; i++) {
+    for (let j = 4 * (j0 - dx / 2); j < 4 * (j0 + dx / 2); j += 4) {
+      const k = 4 * 256 * i + j; // black center pixel in white square
+      const value = (i == i0 & j == 4 * j0) ? 0: 255;
+      imageData.data[k] = value;     // red
+      imageData.data[k + 1] = value; // green 
+      imageData.data[k + 2] = value; // blue
+      imageData.data[k + 3] = 255; // alpha
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  const mydiv = d3.select("#tile");
+//  mydiv.selectall("canvas").remove()
+  mydiv.append(() => canvas);
 }
 ```
 
