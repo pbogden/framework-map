@@ -63,11 +63,14 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 return {opacity};
 }});
 
-define({id: "be8e0f4c", inputs: ["demData","opacity"], body: (demData,opacity) => {
-demData.selectAll("image").attr('opacity', opacity);
+define({id: "249a44e0", inputs: ["map","demData","getTile","opacity"], body: (map,demData,getTile,opacity) => {
+map.on("click", ({offsetX: xs, offsetY: ys}) => {
+     demData.selectAll("image").remove();
+     demData.append(() => getTile(xs, ys)).attr("opacity", opacity);
+});
 }});
 
-define({id: "4f2ff2d8", inputs: ["d3","width","height","tiler","url","display","getTile"], outputs: ["map","tiles","tx","ty","k","demData"], body: (d3,width,height,tiler,url,display,getTile) => {
+define({id: "a684b435", inputs: ["d3","width","height","tiler","url","display"], outputs: ["map","tiles","tx","ty","k","demData"], body: (d3,width,height,tiler,url,display) => {
 const map = d3.create("svg")
     .attr("width", width)
     .attr("height", height)
@@ -86,18 +89,12 @@ map.selectAll("image")
      .attr("href", ([x, y, z]) => url(x, y, z))
 
 const demData = map.append("g")
-map.on("click", ({offsetX: xs, offsetY: ys}) => {
-    demData.selectAll("image").remove();
-    display(`${xs}, ${ys}`)
-    display(getTile(xs, ys))
-    demData.append(() => getTile(xs, ys));
-  });
 
 display(map.node());
 return {map,tiles,tx,ty,k,demData};
 }});
 
-define({id: "181ee3ab", inputs: ["d3","width","tile"], outputs: ["height","center","tileSize","zoom","projection","tiler","dem","url"], body: (d3,width,tile) => {
+define({id: "44949827", inputs: ["d3","width","tile"], outputs: ["height","center","tileSize","zoom","projection","tiler","dem","url"], body: (d3,width,tile) => {
 const height = 500;
 const center = [-70.255, 43.652];
 const tileSize = 256 // 256 is default tileSize for d3-tile
@@ -113,13 +110,13 @@ const tiler = tile()
     .scale(projection.scale() * 2 * Math.PI)
     .translate(projection([0, 0]))
 
-//const dem = (x, y, z) => `https://pbogden.github.io/geo/xyz/${z}/${x}/${y}.png`;
-const dem = (x, y, z) => `https://pbogden.github.io/geo/color/${z}/${x}/${y}.png`;
+const dem = (x, y, z) => `https://pbogden.github.io/geo/xyz/${z}/${x}/${y}.png`;
+//const dem = (x, y, z) => `https://pbogden.github.io/geo/color/${z}/${x}/${y}.png`;
 const url = (x, y, z) => `https://tiles.stadiamaps.com/tiles/alidade_smooth/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`;
 return {height,center,tileSize,zoom,projection,tiler,dem,url};
 }});
 
-define({id: "1b9dd477", inputs: ["tiler","d3","dem"], outputs: ["getTile"], body: (tiler,d3,dem) => {
+define({id: "00657fd0", inputs: ["tiler","tileSize","d3","dem","display"], outputs: ["getTile","getPixelValue"], body: (tiler,tileSize,d3,dem,display) => {
 function getTile(xs, ys) {
   // Indices of tile that was clicked
   const {translate: [tx,ty], scale: k} = tiler();
@@ -135,16 +132,71 @@ function getTile(xs, ys) {
   const xt = (x + tx) * k;
   const yt = (y + ty) * k;
 
+  const [xc, yc] = [xs - xt, ys - yt];
+  const [xp, yp] = [Math.floor(tileSize * xc / k), 
+                    Math.floor(tileSize * yc / k)];
+
   const image = d3.create("svg:image")
     .attr("x", xt)
     .attr("y", yt)
     .attr("width", k)
     .attr("height", k)
+    .classed("dem", true)
+    .on("load", (e) => { getPixelValue(xp, yp, image, e) })
     .attr("href", dem(x, y, z))
-  
-  return image.node();
+    .node();
+
+  return image;
 }
-return {getTile};
+
+function getPixelValue(xp, yp, image, e) {
+  const canvas = d3.create("canvas").attr("height", 256).attr("width", 256).node();
+  const ctx = canvas.getContext("2d");
+
+  // evidently the next line triggers a "load" event, hence the return
+  if (!image.crossOrigin) return image.crossOrigin = "anonymous"; // allows "non-authenticated" cross-origin loading of the image
+  
+  ctx.drawImage(image, 0, 0, 256, 256)
+  const imageData = ctx.getImageData(0, 0, 256, 256);
+
+  let height = null;
+  const k0 = 4 * (256 * yp + xp); // 1-D index of the clicked pixel;
+  const color = d3.scaleSequential([-1, 5], d3.interpolateMagma);
+  for (let i = 0; i < imageData.data.length; i += 4) {
+      const r = imageData.data[i];
+      const g = imageData.data[i + 1];
+      const b = imageData.data[i + 2];
+      const h = -10000 + ((r * 256 * 256 + g * 256 + b) * 0.1);
+      if (i == k0) height = h; 
+    
+      const rgb = d3.rgb(color(h));
+      imageData.data[i] = rgb.r;
+      imageData.data[i + 1] = rgb.g;
+      imageData.data[i + 2] = rgb.b;
+  }
+  display(`getPixelValue: ${xp}, ${yp}, ${d3.format(".1f")(height)}`)
+
+  const dx = 10;
+  const i0 = yp;  // row (0-255 starting from top)
+  const j0 = xp;  // column (0-255 starting from left)
+  for (let i= 4 * (i0 - dx / 2); i < 4 * (i0 + dx / 2); i += 4) {
+    for (let j = 4 * (j0 - dx / 2); j < 4 * (j0 + dx / 2); j += 4) {
+      const k = 256 * i + j; // black center pixel in white square
+      const value = (i == 4 * i0 & j == 4 * j0) ? 0: 255;
+      imageData.data[k] = value;     // red
+      imageData.data[k + 1] = value; // green 
+      imageData.data[k + 2] = value; // blue
+      imageData.data[k + 3] = 255; // alpha
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  const mydiv = d3.select("#tile");
+  mydiv.selectAll("canvas").remove()
+  mydiv.append(() => canvas);
+}
+return {getTile,getPixelValue};
 }});
 
 define({id: "1f5df95f", outputs: ["tile"], body: async () => {
@@ -181,15 +233,16 @@ return {tile};
 </aside>
 <main id="observablehq-main" class="observablehq">
 <div class="observablehq observablehq--block"><!--:f0c8cbc0:--></div>
-<div class="observablehq observablehq--block"><!--:be8e0f4c:--></div>
-<div class="observablehq observablehq--block"><!--:4f2ff2d8:--></div>
-<div class="observablehq observablehq--block"><!--:181ee3ab:--></div>
-<div class="observablehq observablehq--block"><!--:1b9dd477:--></div>
+<div class="observablehq observablehq--block"><!--:249a44e0:--></div>
+<div class="observablehq observablehq--block"><!--:a684b435:--></div>
+<div id="tile"></div>
+<div class="observablehq observablehq--block"><!--:44949827:--></div>
+<div class="observablehq observablehq--block"><!--:00657fd0:--></div>
 <div class="observablehq observablehq--block"><!--:1f5df95f:--></div>
 </main>
 <footer id="observablehq-footer">
 <nav><a rel="prev" href="./contours"><span>Contours</span></a></nav>
-<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-01-20T08:05:32">Jan 20, 2025</a>.</div>
+<div>Built with <a href="https://observablehq.com/" target="_blank" rel="noopener noreferrer">Observable</a> on <a title="2025-02-04T09:56:43">Feb 4, 2025</a>.</div>
 </footer>
 </div>
 </body>
