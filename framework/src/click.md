@@ -3,9 +3,10 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 ```
 
 ```js
+demData.attr("opacity", opacity)
 map.on("click", ({offsetX: xs, offsetY: ys}) => {
      demData.selectAll("image").remove();
-     demData.append(() => getTile(xs, ys)).attr("opacity", opacity);
+     demData.append(() => getTile(xs, ys));
 });
 ```
 
