@@ -3,7 +3,10 @@ const opacity = view(Inputs.range([0, 1], {label: "Opacity", format: x => x.toFi
 ```
 
 ```js
-demData.selectAll("image").attr('opacity', opacity);
+map.on("click", ({offsetX: xs, offsetY: ys}) => {
+     demData.selectAll("image").remove();
+     demData.append(() => getTile(xs, ys)).attr("opacity", opacity);
+});
 ```
 
 ```js
@@ -25,11 +28,6 @@ map.selectAll("image")
      .attr("href", ([x, y, z]) => url(x, y, z))
 
 const demData = map.append("g")
-map.on("click", ({offsetX: xs, offsetY: ys}) => {
-     demData.selectAll("image").remove();
-     display(`${xs}, ${ys}`)
-     demData.append(() => getTile(xs, ys));
-});
 
 display(map.node());
 ```
@@ -52,8 +50,8 @@ const tiler = tile()
     .scale(projection.scale() * 2 * Math.PI)
     .translate(projection([0, 0]))
 
-//const dem = (x, y, z) => `https://pbogden.github.io/geo/xyz/${z}/${x}/${y}.png`;
-const dem = (x, y, z) => `https://pbogden.github.io/geo/color/${z}/${x}/${y}.png`;
+const dem = (x, y, z) => `https://pbogden.github.io/geo/xyz/${z}/${x}/${y}.png`;
+//const dem = (x, y, z) => `https://pbogden.github.io/geo/color/${z}/${x}/${y}.png`;
 const url = (x, y, z) => `https://tiles.stadiamaps.com/tiles/alidade_smooth/${z}/${x}/${y}${devicePixelRatio > 1 ? "@2x" : ""}.png`;
 ```
 
@@ -83,31 +81,47 @@ function getTile(xs, ys) {
     .attr("width", k)
     .attr("height", k)
     .classed("dem", true)
-    .on("load", () => getPixelValue(xp, yp))
+    .on("load", (e) => { getPixelValue(xp, yp, image, e) })
     .attr("href", dem(x, y, z))
     .node();
-  
+
   return image;
 }
 
-function getPixelValue(xp,yp) {
-  display(`I've been called [${xp}, ${yp}]`)
+function getPixelValue(xp, yp, image, e) {
   const canvas = d3.create("canvas").attr("height", 256).attr("width", 256).node();
   const ctx = canvas.getContext("2d");
 
-//  const image = d3.select(map).select(".dem").node();
-  image.crossOrigin = "Anonymous"; // allows "non-authenticated" cross-origin loading of the image
+  // evidently the next line triggers a "load" event, hence the return
+  if (!image.crossOrigin) return image.crossOrigin = "anonymous"; // allows "non-authenticated" cross-origin loading of the image
   
   ctx.drawImage(image, 0, 0, 256, 256)
   const imageData = ctx.getImageData(0, 0, 256, 256);
 
+  let height = null;
+  const k0 = 4 * (256 * yp + xp); // 1-D index of the clicked pixel;
+  const color = d3.scaleSequential([-1, 5], d3.interpolateMagma);
+  for (let i = 0; i < imageData.data.length; i += 4) {
+      const r = imageData.data[i];
+      const g = imageData.data[i + 1];
+      const b = imageData.data[i + 2];
+      const h = -10000 + ((r * 256 * 256 + g * 256 + b) * 0.1);
+      if (i == k0) height = h; 
+    
+      const rgb = d3.rgb(color(h));
+      imageData.data[i] = rgb.r;
+      imageData.data[i + 1] = rgb.g;
+      imageData.data[i + 2] = rgb.b;
+  }
+  display(`getPixelValue: ${xp}, ${yp}, ${d3.format(".1f")(height)}`)
+
   const dx = 10;
   const i0 = yp;  // row (0-255 starting from top)
   const j0 = xp;  // column (0-255 starting from left)
-  for (let i= i0 - dx / 2; i < i0 + dx / 2; i++) {
+  for (let i= 4 * (i0 - dx / 2); i < 4 * (i0 + dx / 2); i += 4) {
     for (let j = 4 * (j0 - dx / 2); j < 4 * (j0 + dx / 2); j += 4) {
-      const k = 4 * 256 * i + j; // black center pixel in white square
-      const value = (i == i0 & j == 4 * j0) ? 0: 255;
+      const k = 256 * i + j; // black center pixel in white square
+      const value = (i == 4 * i0 & j == 4 * j0) ? 0: 255;
       imageData.data[k] = value;     // red
       imageData.data[k + 1] = value; // green 
       imageData.data[k + 2] = value; // blue
@@ -118,7 +132,7 @@ function getPixelValue(xp,yp) {
   ctx.putImageData(imageData, 0, 0);
 
   const mydiv = d3.select("#tile");
-//  mydiv.selectall("canvas").remove()
+  mydiv.selectAll("canvas").remove()
   mydiv.append(() => canvas);
 }
 ```
