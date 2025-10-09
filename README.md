@@ -60,7 +60,7 @@ The site is here: https://pbogden.github.io/framework-map/
 
 See also...
 * [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
-* [mcclare.blog](https://mclare.blog/posts/building-oss-map-apps-with-observable-framework/)
+* [mclare.blog](https://mclare.blog/posts/building-oss-map-apps-with-observable-framework/)
 * [observable-framework-maps](https://github.com/bdon/observable-framework-maps) -- github
   * [demo](https://bdon.github.io/observable-framework-maps/)
 
