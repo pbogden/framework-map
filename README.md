@@ -60,9 +60,16 @@ The site is here: https://pbogden.github.io/framework-map/
 
 See also...
 * [MapLibre GL](https://observablehq.observablehq.cloud/pangea/party/maplibre-gl#12/47.27574/11.39085/0/52) -- Fil demo
+  * Source: https://raw.githubusercontent.com/Fil/pangea/refs/heads/main/src/party/maplibre-gl.md
+  * Noteworthy: the map div and link to the css do *not* use html code blocks.
+  They're explicit at the top of the markdown page -- I believe that's done to assure that they're
+  both part of the DOM before any of the JavaScript executes...
+  ```
+  <div id="map" style="width: 100%; height: 450px;"></div>
+  <link rel="stylesheet" href="npm:maplibre-gl/dist/maplibre-gl.css">
+  ```
+* [pangea](https://github.com/Fil/pangea) -- Fil's github repo with a bunch of framework demos
 * [mclare.blog](https://mclare.blog/posts/building-oss-map-apps-with-observable-framework/)
-* [observable-framework-maps](https://github.com/bdon/observable-framework-maps) -- github
-  * [demo](https://bdon.github.io/observable-framework-maps/)
 
 ## Map tiles
 
